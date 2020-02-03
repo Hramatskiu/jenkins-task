@@ -1,29 +1,22 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
-    options {
-        skipStagesAfterUnstable()
-    }
+    agent any
     stages {
-        stage('Build') {
-
+        stage ('Clone') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                git branch: 'master', url: "https://github.com/Hramatskiu/spark-wf-task.git"
             }
         }
-        stage('Test') {
+
+        stage ('Exec Maven') {
             steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
+                rtMavenRun (
+                    tool: MAVEN_TOOL, // Tool name from Jenkins configuration
+                    pom: 'spark-wf-task/pom.xml',
+                    goals: 'clean package -DskipTests',
+                    deployerId: "MAVEN_DEPLOYER",
+                    resolverId: "MAVEN_RESOLVER"
+                )
+             }
         }
     }
 }
