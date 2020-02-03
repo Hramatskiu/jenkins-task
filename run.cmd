@@ -3,18 +3,16 @@ ECHO -------------------------------------------------JENKINS PIPELINE JOB------
 set OUT_LOG_LOCATION=logs/out.txt
 set ERR_LOG_LOCATION=logs/err.txt
 ECHO Starting airflow container
-docker run --name jenkins -p 48080:8080 -p 50000:50000 -d jenkins/jenkins:lts
-ECHO Copying cmd and task_lib folders on cluster
+docker run --name jenkins -p 48080:8080 -p 50000:50000 -d jenkins/jenkins:lts >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
+ECHO Use this password to login as admin:
 docker exec -ti jenkins /bin/cat /var/jenkins_home/secrets/initialAdminPassword
-docker cp Jenkinsfile jenkins:/ >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
-docker cp task_lib sandbox-hdp:/ >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
-docker cp airflow-cmd airflow:/ >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
-docker exec -ti -u root airflow /bin/chmod -R 777 /airflow-cmd
-ECHO Wait for a minute until airflow is starting
-ping 127.0.0.1 -n 60 > nul
-ECHO Starting script execution
-docker exec -ti airflow /bin/bash /airflow-cmd/add-connection.sh >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
-docker exec -ti airflow /bin/bash /airflow-cmd/start-airflow-dag.sh >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
+ECHO Install default plugins and continue
+PAUSE
+ECHO Import pipeline
+docker cp /jenkins-task/cmd jenkins:/ >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
+docker exec -ti jenkins /bin/chmod -R 777 /cmd >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
+docker exec -ti jenkins /bin/bash /cmd/import-job.sh >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
+ECHO View pipeline on <DOCKER_IP>:48080/job/jn-task/
 ECHO Cleanup cluster
-docker rm -f jenkins
+::docker rm -f jenkins
 PAUSE
