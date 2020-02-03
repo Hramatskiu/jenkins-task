@@ -5,26 +5,29 @@ pipeline {
         string(defaultValue: 'https://github.com/Hramatskiu/spark-wf-task.git', description: 'Git repository with project', name: 'gitRepository')
         string(defaultValue: 'maven-3', description: 'Git repository with project', name: 'mavenTool')
     }
-    stages {
+    stage('Run both'){
         tools {
             maven "${params.mavenTool}"
         }
-        stage ('Clone') {
-            steps {
-                git branch: 'master', url: "${params.gitRepository}"
+        stages {
+                stage ('Clone') {
+                    steps {
+                        git branch: 'master', url: "${params.gitRepository}"
+                    }
+                }
+
+                stage ('Build without tests') {
+                    steps {
+                        sh "mvn clean package -DskipTests"
+                     }
+                }
+
+                stage ('Run tests') {
+                    steps {
+                        sh "mvn test"
+                     }
+                }
             }
-        }
-
-        stage ('Build without tests') {
-            steps {
-                sh "mvn clean package -DskipTests"
-             }
-        }
-
-        stage ('Run tests') {
-            steps {
-                sh "mvn test"
-             }
-        }
     }
+
 }
