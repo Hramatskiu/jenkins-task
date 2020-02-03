@@ -3,10 +3,9 @@ pipeline {
     parameters {
         //Default value for task only!!
         string(defaultValue: 'https://github.com/Hramatskiu/spark-wf-task.git', description: 'Git repository with project', name: 'gitRepository')
-        string(defaultValue: 'maven-3', description: 'Maven tool for building artifact', name: 'mavenTool')
     }
     tools {
-        maven '${params.mavenTool}'
+        maven 'maven-3'
     }
     stages {
         stage ('Clone') {
