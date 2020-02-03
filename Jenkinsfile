@@ -1,7 +1,8 @@
 pipeline {
     agent any
     parameters {
-        string(defaultValue: '', description: '', name: 'gitRepository')
+        //Default value for task only!!
+        string(defaultValue: 'https://github.com/Hramatskiu/spark-wf-task.git', description: '', name: 'gitRepository')
     }
     tools {
         maven 'maven-3'
