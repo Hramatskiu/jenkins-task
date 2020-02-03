@@ -1,6 +1,8 @@
 PASSWORD=$(cat /var/jenkins_home/secrets/initialAdminPassword)
 echo $PASSWORD
 #If CRSF disabled this header is unnecessary
-#CRUMB=$(curl --silent 'http://localhost:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)' -u admin:$PASSWORD)
+CRUMB=$(curl --silent --cookie-jar /tmp/cookie 'http://localhost:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)' -u admin:$PASSWORD)
 #echo $CRUMB
-curl --silent -H "Content-Type:text/xml" -XPOST 'http://localhost:8080/createItem?name=jn-task' -u admin:$PASSWORD --data-binary @/cmd/task.xml
+curl -v --cookie /tmp/cookie -H "Content-Type:text/xml" -H "$CRUMB" -XPOST 'http://localhost:8080/createItem?name=jn-task' -u admin:$PASSWORD --data-binary @/cmd/task.xml
+
+curl -v --cookie /tmp/cookie -H "Content-Type:text/xml" -H "$CRUMB" -XPOST 'http://localhost:8080/configureTools?name=maven' -u admin:$PASSWORD --data-binary @/cmd/maven.xml

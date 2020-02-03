@@ -3,7 +3,7 @@ ECHO -------------------------------------------------JENKINS PIPELINE JOB------
 set OUT_LOG_LOCATION=logs/out.txt
 set ERR_LOG_LOCATION=logs/err.txt
 ECHO Starting jenkins container
-docker run --name jenkins -p 48080:8080 -p 50000:50000 -d hstanislau/jenkins-task:latest >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
+docker run --name jenkins -p 48080:8080 -p 50000:50000 -d jenkins/jenkins:lts >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
 ECHO Wait for a 30 sec until jenkins is starting
 ping 127.0.0.1 -n 30 > nul
 ECHO Use this password to login as admin:
