@@ -9,7 +9,7 @@ pipeline {
 
         stage ('Exec Maven') {
             steps {
-                rtMavenRun (
+                maven (
                     tool: 'maven-3', // Tool name from Jenkins configuration
                     pom: 'spark-wf-task/pom.xml',
                     goals: 'clean package -DskipTests',
