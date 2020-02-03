@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage ('Clone') {
             steps {
-                git branch: 'master', url: "${params.getRepository}"
+                git branch: 'master', url: "${params.gitRepository}"
             }
         }
 
