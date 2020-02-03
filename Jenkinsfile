@@ -1,12 +1,15 @@
 pipeline {
     agent any
+    parameters {
+        string(defaultValue: '', description: '', name: 'gitRepository')
+    }
     tools {
         maven 'maven-3'
     }
     stages {
         stage ('Clone') {
             steps {
-                git branch: 'master', url: "https://github.com/Hramatskiu/spark-wf-task.git"
+                git branch: 'master', url: "${params.getRepository}"
             }
         }
 
