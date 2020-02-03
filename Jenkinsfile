@@ -2,8 +2,8 @@ pipeline {
     agent any
     parameters {
         //Default value for task only!!
-        string(defaultValue: 'https://github.com/Hramatskiu/spark-wf-task.git', description: '', name: 'gitRepository')
-        string(defaultValue: 'maven-3', description: '', name: 'mavenTool')
+        string(defaultValue: 'https://github.com/Hramatskiu/spark-wf-task.git', description: 'Git repository with project', name: 'gitRepository')
+        string(defaultValue: 'maven-3', description: 'Maven tool for building artifact', name: 'mavenTool')
     }
     tools {
         maven '${params.mavenTool}'
