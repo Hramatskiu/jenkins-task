@@ -6,7 +6,7 @@ pipeline {
         string(defaultValue: 'maven-3', description: 'Git repository with project', name: 'mavenTool')
     }
     tools {
-        maven '${params.mavenTool}'
+        maven "${tool 'Maven 3.x'}"
     }
     stages {
         stage ('Clone') {
