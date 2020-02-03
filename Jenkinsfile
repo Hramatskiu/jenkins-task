@@ -10,7 +10,13 @@ pipeline {
             }
         }
 
-        stage ('Exec Maven') {
+        stage ('Build without tests') {
+            steps {
+                sh "mvn clean package -DskipTests"
+             }
+        }
+
+        stage ('Run tests') {
             steps {
                 sh "mvn clean package -DskipTests"
              }
