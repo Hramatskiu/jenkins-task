@@ -1,8 +1,7 @@
 pipeline {
     agent any
     parameters {
-        //Default value for task only!!
-        string(defaultValue: 'https://github.com/Hramatskiu/jenkins-task.git', description: '', name: 'gitRepository')
+        string(defaultValue: '', description: '', name: 'gitRepository')
     }
     tools {
         maven 'maven-3'
