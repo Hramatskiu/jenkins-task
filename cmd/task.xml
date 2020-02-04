@@ -19,25 +19,17 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>gitRepository</name>
-          <description>Git repository with project</description>
-          <defaultValue>https://github.com/Hramatskiu/spark-wf-task.git</defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
           <name>gitBranch</name>
           <description>Git branch for build and test</description>
           <defaultValue>master</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>gitRepository</name>
+          <description>Git repository with project</description>
+          <defaultValue>https://github.com/Hramatskiu/spark-wf-task.git</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>mavenTool</name>
           <description>Maven tool for building project</description>

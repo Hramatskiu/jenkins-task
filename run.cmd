@@ -18,5 +18,5 @@ ECHO View pipeline on <DOCKER_IP>:48080/job/jn-task/
 ECHO Press Enter to delete jenkins container
 PAUSE
 ECHO Cleanup cluster
-::docker rm -f jenkins
+docker rm -f jenkins
 PAUSE
