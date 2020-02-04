@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        IS_BUILD_OK = "false"
+        IS_BUILD_OK = 'false'
     }
     parameters {
         //Default value for task only!!
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     sh "mvn -B -DskipTests clean package"
-                    IS_BUILD_OK = 'true'
+                    env.IS_BUILD_OK = 'true'
                 }
              }
         }
