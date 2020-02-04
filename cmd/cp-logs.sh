@@ -1,0 +1,1 @@
+cp -r $JENKINS_HOME/jobs /cmd/j_logs

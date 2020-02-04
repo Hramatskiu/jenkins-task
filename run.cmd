@@ -15,7 +15,8 @@ docker cp cmd jenkins:/ >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
 docker exec -ti -u root jenkins /bin/chmod -R 777 /cmd >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
 docker exec -ti jenkins /bin/bash /cmd/import-job.sh >> %OUT_LOG_LOCATION% 2>> %ERR_LOG_LOCATION%
 ECHO View pipeline on <DOCKER_IP>:48080/job/jn-task/
-ECHO Press Enter to delete jenkins container
+ECHO Use load-jn-task-logs.cmd to load pipeline logs
+ECHO Press Enter to stop and delete jenkins container
 PAUSE
 ECHO Cleanup cluster
 docker rm -f jenkins
