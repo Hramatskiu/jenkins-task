@@ -21,9 +21,10 @@ pipeline {
             }
             steps {
                 script {
-                    sh "mvn -B -DskipTests clean package"
-                    sh "env.IS_BUILD_OK = 'true'"
-                    echo env.IS_BUILD_OK
+                    echo IS_BUILD_OK
+                    mvn -B -DskipTests clean package
+                    IS_BUILD_OK = 'true'
+                    echo IS_BUILD_OK
                 }
              }
         }
