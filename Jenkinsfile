@@ -6,7 +6,7 @@ pipeline {
         string(defaultValue: '', description: 'Maven tool for building project', name: 'mavenTool')
     }
     stages {
-        boolean isBuildOk = true
+        def boolean isBuildOk = true
 
         stage ('Clone') {
             steps {

@@ -7,6 +7,7 @@
       <triggers/>
       <parameters>
         <string>gitRepository</string>
+        <string>mavenTool</string>
       </parameters>
       <options/>
     </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
