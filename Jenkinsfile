@@ -6,28 +6,40 @@ pipeline {
         string(defaultValue: '', description: 'Maven tool for building project', name: 'mavenTool')
     }
     stages {
+        boolean isBuildOk = true
+
         stage ('Clone') {
             steps {
                 git branch: 'master', url: "${params.gitRepository}"
             }
         }
 
-        stage ('Build without tests') {
+        stage ('Build') {
             tools {
-                maven "${params.mavenTool}"
+                isBuildOk = maven "${params.mavenTool}"
             }
             steps {
-                sh "mvn clean package -DskipTests"
+                sh "mvn -B -DskipTests clean package"
              }
         }
 
-        stage ('Run tests') {
+        stage ('Test') {
             tools {
                 maven "${params.mavenTool}"
             }
+            when {
+                isBuildOk == true
+            }
+
             steps {
                 sh "mvn test"
-             }
+            }
+
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
         }
     }
 }
