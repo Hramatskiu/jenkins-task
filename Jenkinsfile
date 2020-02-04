@@ -22,7 +22,7 @@ pipeline {
             steps {
                 sh "mvn -B -DskipTests clean package"
                 sh "env.IS_BUILD_OK = 'true'"
-                sh "echo env.IS_BUILD_OK"
+                echo env.IS_BUILD_OK
              }
         }
 
