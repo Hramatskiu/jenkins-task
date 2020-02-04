@@ -1,17 +1,16 @@
 pipeline {
     agent any
-    environment {
-        IS_BUILD_OK = 'false'
-    }
     parameters {
         //Default value for task only!!
         string(defaultValue: 'https://github.com/Hramatskiu/spark-wf-task.git', description: 'Git repository with project', name: 'gitRepository')
+        //Use error branch for build incorrect code
+        string(defaultValue: 'master', description: 'Git branch for build and test', name: 'gitBranch')
         string(defaultValue: '', description: 'Maven tool for building project', name: 'mavenTool')
     }
     stages {
         stage ('Clone') {
             steps {
-                git branch: 'master', url: "${params.gitRepository}"
+                git branch: '${params.gitBranch}', url: "${params.gitRepository}"
             }
         }
 
@@ -19,10 +18,16 @@ pipeline {
             tools {
                 maven "${params.mavenTool}"
             }
+
             steps {
-                sh "mvn -B -DskipTests clean package"
-                sh "env.IS_BUILD_OK = 'true'"
-                echo env.IS_BUILD_OK
+                script {
+                    try {
+                        sh "mvn -B -DskipTests clean package"
+                    }
+                    catch (Exception e) {
+                        echo "Build failed"
+                    }
+                }
              }
         }
 
@@ -30,8 +35,11 @@ pipeline {
             tools {
                 maven "${params.mavenTool}"
             }
+
             when {
-                environment name: 'IS_BUILD_OK', value: 'true'
+              expression {
+                currentBuild.result == 'SUCCESS'
+              }
             }
 
             steps {

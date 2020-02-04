@@ -7,6 +7,7 @@
       <triggers/>
       <parameters>
         <string>gitRepository</string>
+        <string>gitBranch</string>
         <string>mavenTool</string>
       </parameters>
       <options/>
@@ -21,6 +22,16 @@
           <name>gitRepository</name>
           <description>Git repository with project</description>
           <defaultValue>https://github.com/Hramatskiu/spark-wf-task.git</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>gitBranch</name>
+          <description>Git branch for build and test</description>
+          <defaultValue>master</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
