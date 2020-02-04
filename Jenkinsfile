@@ -1,3 +1,4 @@
+def boolean isBuildOk = true
 pipeline {
     agent any
     parameters {
@@ -6,8 +7,6 @@ pipeline {
         string(defaultValue: '', description: 'Maven tool for building project', name: 'mavenTool')
     }
     stages {
-        def boolean isBuildOk = true
-
         stage ('Clone') {
             steps {
                 git branch: 'master', url: "${params.gitRepository}"
