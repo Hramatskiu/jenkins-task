@@ -1,5 +1,5 @@
-def boolean isBuildOk = true
 pipeline {
+    def boolean isBuildOk = false
     agent any
     parameters {
         //Default value for task only!!
@@ -18,7 +18,8 @@ pipeline {
                 maven "${params.mavenTool}"
             }
             steps {
-                isBuildOk = sh "mvn -B -DskipTests clean package"
+                sh "mvn -B -DskipTests clean package"
+                isBuildOk = true
              }
         }
 
