@@ -1,6 +1,8 @@
 pipeline {
-    def boolean isBuildOk = false
     agent any
+    environment {
+        IS_BUILD_OK = "false"
+    }
     parameters {
         //Default value for task only!!
         string(defaultValue: 'https://github.com/Hramatskiu/spark-wf-task.git', description: 'Git repository with project', name: 'gitRepository')
@@ -18,8 +20,10 @@ pipeline {
                 maven "${params.mavenTool}"
             }
             steps {
-                sh "mvn -B -DskipTests clean package"
-                isBuildOk = true
+                script {
+                    sh "mvn -B -DskipTests clean package"
+                    IS_BUILD_OK = 'true'
+                }
              }
         }
 
@@ -28,7 +32,7 @@ pipeline {
                 maven "${params.mavenTool}"
             }
             when {
-                isBuildOk == true
+                environment name: 'IS_BUILD_OK', value: 'true'
             }
 
             steps {
