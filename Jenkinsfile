@@ -23,9 +23,12 @@ pipeline {
                 script {
                     try {
                         sh "mvn -B -DskipTests clean package"
+                        currentBuild.result = 'SUCCESS'
                     }
+                    //No error raising, just handling
                     catch (Exception e) {
                         echo "Build failed"
+                        currentBuild.result = 'FAILURE'
                     }
                 }
              }
@@ -47,7 +50,7 @@ pipeline {
             }
 
             post {
-                always {
+                success {
                     junit 'target/surefire-reports/*.xml'
                 }
             }
