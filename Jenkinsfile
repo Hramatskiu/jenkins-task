@@ -20,10 +20,8 @@ pipeline {
                 maven "${params.mavenTool}"
             }
             steps {
-                script {
-                    sh "mvn -B -DskipTests clean package"
-                    env.IS_BUILD_OK = 'true'
-                }
+                sh "mvn -B -DskipTests clean package"
+                env.IS_BUILD_OK = 'true'
              }
         }
 
