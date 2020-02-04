@@ -15,10 +15,10 @@ pipeline {
 
         stage ('Build') {
             tools {
-                isBuildOk = maven "${params.mavenTool}"
+                maven "${params.mavenTool}"
             }
             steps {
-                sh "mvn -B -DskipTests clean package"
+                isBuildOk = sh "mvn -B -DskipTests clean package"
              }
         }
 
